@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <title th:utext="${title}"></title>
+       <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+      <style>
+         th, td {
+         padding: 5px;
+         }
+         td span  {
+         font-size:90%;
+         font-style: italic;
+         color: red;
+         }
+         .error {
+         color: red;
+         font-style: italic;
+         }
+         /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Add a gray background color and some padding to the footer */
+    footer {
+      background-color: #f2f2f2;
+      padding: 25px;
+    }
+      </style>
+   </head>
+   <body>
+      <nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" th:href="@{/}">Banking App</a>
+    </div>
+    <!-- Include _menu.html -->
+      <th:block th:include="/_menu"></th:block>  
+  </div>
+</nav>
+<div class="jumbotron">
+  <div class="container text-left">
+      
+      <h2>Withdraw Cash</h2>
+      
+      <div th:if="${errorMessage != null}"
+           th:utext="${errorMessage}" class="error">...</div>
+      
+      <form th:action="@{'/members/withdraw/'+${userId}}" th:object="${withdrawForm}" method="POST">
+         <table class="table table-hover">
+            <tr>
+               <td>User Id</td>
+               <td th:utext="${userId}"></td>
+               <td></td>
+            </tr>
+            <tr>
+               <td>Withdraw Amount LKR</td>
+               <td><input type="text" th:field="*{accbalance}" /> </td>
+               <td>
+                  <span th:if="${#fields.hasErrors('accbalance')}" th:errors="*{accbalance}">..</span>
+               </td>
+            </tr>
+            <tr>
+               <td>&nbsp;</td>
+               <td>
+                  <input type="submit" value="Submit" />
+                  <a th:href="@{/}">Cancel</a>
+               </td>
+               <td>&nbsp;</td>
+            </tr>
+         </table>
+      </form>
+      </div>
+      </div>
+      <footer class="container-fluid text-center">
+  <p>Sample Work By BSW</p>
+</footer> 
+   </body>
+</html>
